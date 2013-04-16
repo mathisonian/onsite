@@ -1,0 +1,21 @@
+/* This was created by the fine folks at HuffPost Labs */
+/* labs.huffingtonpost.com */
+/* humanstxt.org */
+
+Authors
+=====
+Matthew Conlen <mc@mathisonian.com>
+
+Front End
+=====
+Zurb Foundation 2.2
+Jade Templates
+
+Back End
+=====
+node.js
+express.js
+
+Database
+=====
+mongo.db
