@@ -1,0 +1,40 @@
+extends ./layouts/default
+
+
+block map
+    .div(id="map-canvas")
+
+block content
+    .breaking-news
+        h3.news-content
+            | #{news.text}
+        .location
+            | Streaming Tweets From #{news.locations}
+            span.location-content
+
+    .tweet-container
+        for tweet in tweets
+            .tweet-pic
+                img(src="#{tweet.user.profile_image_url}")
+            .tweet-content
+                | #{tweet.text}
+            br
+            .tweet-user
+                |  - by @#{tweet.user.screen_name}
+
+            br
+            br
+            .tweet-reason
+                | #{tweet.reason}
+
+
+block pre-footer
+    script#tweet-template(style='display: none').
+        <div class='tweet-pic'><img src='<%= img %>'></div>
+        <div class='tweet-content'><%= text %></div><br/>
+        <div class='tweet-content'> - by @<%= screen_name %></div>
+        <br/><br/>
+        <div class='tweet-reason'><%= reason %></div>
+
+    script.
+        map_location = [#{coordinates}];
