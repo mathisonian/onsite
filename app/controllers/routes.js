@@ -8,10 +8,16 @@
 
 exports.home = function(req, res) {
 
-    BreakingNews.findOne({}, {}, { sort: { 'created' : -1 } }, function(err, news) {
+    BreakingNews.find().sort('-created').limit(1).exect(function(err, news) {
+
       console.log( news );
       if(err) {
         res.send(500);
+      }
+      if (news.length > 0) {
+        news = news[0]
+      } else {
+        news = null;
       }
       if(news) {
         ValidatedTweet.find({news: news._id}).sort('-created').limit(1).exec(function(err, tweets) {

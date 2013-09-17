@@ -13,7 +13,7 @@ var rootPath = path.resolve(__dirname + '../..');
 module.exports = {
   development: {
     root: rootPath,
-    db: 'mongodb://localhost/onsite?w=1',
+    db: 'mongodb://localhost/onsite',
     options: {keepAlive: 1,
               w: 1},
     plugin_api_url: 'http://localhost:9000'
@@ -26,13 +26,13 @@ module.exports = {
   },
   staging: {
     root: rootPath,
-    db: 'mongodb://nodejitsu_mathisonian:3hlpavgig3qvrnjd8pprg87afr@ds045978.mongolab.com:45978/nodejitsu_mathisonian_nodejitsudb3732524963',
+    db: 'mongodb://localhost/onsite',
     options: {keepAlive: 1,
               w: 1}
   },
   production: {
     root: rootPath,
-    db: 'mongodb://nodejitsu_mathisonian:3hlpavgig3qvrnjd8pprg87afr@ds045978.mongolab.com:45978/nodejitsu_mathisonian_nodejitsudb3732524963',
+    db: 'mongodb://localhost/onsite',
     options: {keepAlive: 1,
               w: 1}
   }
