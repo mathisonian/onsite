@@ -1,0 +1,28 @@
+html { height: 100% }
+body { height: 100%; margin: 0; padding: 0 }
+
+#map-canvas { 
+    height: 100%;
+    /*z-index: -1;*/
+}
+
+.breaking-news {
+    position: absolute;
+    top: 10px;
+    height: 80px;
+    left: 2%;
+    right: 2%;
+    background: rgba(240, 240, 240, 0.89);
+    padding: 0 10px 5px 10px;
+}
+
+.tweet-container {
+    position: absolute;
+    top: 120px;
+    right: 2%;
+    height: 200px;
+    background: rgba(240, 240, 240, 0.89);
+    padding: 10px 10px 5px 10px;
+    overflow: scroll;
+    width: 33%
+}
