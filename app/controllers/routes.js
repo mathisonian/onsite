@@ -8,7 +8,7 @@
 
 exports.home = function(req, res) {
 
-    BreakingNews.find().sort('-created').limit(1).exect(function(err, news) {
+    BreakingNews.find().sort('-created').limit(1).exec(function(err, news) {
 
       console.log( news );
       if(err) {
