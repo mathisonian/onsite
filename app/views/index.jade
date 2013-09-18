@@ -9,8 +9,9 @@ block content
         h3.news-content
             | #{news.text}
         .location
-            | Streaming Tweets From #{news.locations}
+            | Streaming Tweets From 
             span.location-content
+                | #{news.locations}
 
     .tweet-container
         for tweet in tweets

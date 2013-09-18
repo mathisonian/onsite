@@ -27,7 +27,7 @@ $(function() {
     if(map_location.length == 2) {
         center = new google.maps.LatLng(map_location[1], map_location[0]);
     } else {
-        center = new google.maps.LatLng(40.6700, -73.9400);
+          codeAddress();
     }
     var mapOptions = {
       center: center,
@@ -37,6 +37,17 @@ $(function() {
     };
     var map = new google.maps.Map(document.getElementById("map-canvas"),
         mapOptions);
+
+
+
+      function codeAddress() {
+        var address = ('.location-content').text();
+        geocoder.geocode( { 'address': address}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            map.panTo(results[0].geometry.location);
+          }
+        });
+      }
 
 
 });
