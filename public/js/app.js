@@ -41,6 +41,7 @@ $(function() {
 
 
       function codeAddress() {
+      var geocoder = new google.maps.Geocoder();;
         var address = $('.location-content').text();
         geocoder.geocode( { 'address': address}, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {

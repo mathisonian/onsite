@@ -65,7 +65,7 @@ Onsite = function(index, twitter_connection_obj, alchemy_api_key, io) {
     if (tweet_data.in_reply_to_status_id) {
       return false;
     }
-    var follower_threshold = 2500;
+    var follower_threshold = 5000;
     if(typeof tweet_data.user === "undefined") {
       return false;
     }
