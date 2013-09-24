@@ -1,16 +1,15 @@
+var alchemy_api_url = "http://access.alchemyapi.com",
+    geocoder = require('geocoder'),
+    twitter = require('ntwitter'),
+    request = require('request'),
+    twitter_text = require('twitter-text'),
+    news_api_url = "http://api.usatoday.com/open",
+    qs = require('querystring'),
+    async = require('async'),
+    mongoose = require('mongoose');
 
-var alchemy_api_url = "http://access.alchemyapi.com";
-var geocoder = require('geocoder');
-var twitter = require('ntwitter');
-var request = require('request');
-var twitter_text = require('twitter-text');
-var news_api_url = "http://api.usatoday.com/open";
-var qs = require('querystring');
-var async = require('async');
-var mongoose = require('mongoose')
-
-var ValidatedTweet = mongoose.model("ValidatedTweet");
-var BreakingNews = mongoose.model("BreakingNews");
+var ValidatedTweet = mongoose.model("ValidatedTweet"),
+    BreakingNews = mongoose.model("BreakingNews");
 
 var intersect_safe = function(a, b) {
   var ai=0, bi=0;
@@ -38,11 +37,8 @@ var encodeGoogleViewport = function(viewport) {
   return southwest.lng + "," + southwest.lat + "," + northeast.lng + "," + northeast.lat;
 }
 
-
-
 var entity_types = ["StateOrCounty", "City", "State", "County", "Facility"];
 entity_types.sort();
-
 
 var reputable_set = require('./sources').organizations;
 reputable_set.sort();
@@ -50,14 +46,12 @@ reputable_set.sort();
 var keyword_set = require('./sources').keywords;
 keyword_set.sort();
 
-
 var current_tweet_id = "";
 var current_breaking_news = null;
 var reason = "";
 var currentStream = false;
 
 Onsite = function(index, twitter_connection_obj, alchemy_api_key, io) {
-
 
   var twit = new twitter(twitter_connection_obj);
 
@@ -112,19 +106,18 @@ Onsite = function(index, twitter_connection_obj, alchemy_api_key, io) {
     var location_entites = [];
     request({url: url, json: true}, function (error, response, body) {
       if (!error && response.statusCode == 200) {
-        
+
         for (i in body.entities) {
           var entity = body.entities[i];
-          console.log(entity.type);
-          console.log(entity.text);
-          console.log(entity.relevance);
+          console.log("Entity: ", entity.type, entity.text, entity.relevance);
+
           if(intersect_safe(entity_types, [entity.type]).length > 0 && entity.relevance > 0.1) {
             // console.log(entity);
             location_entites.push(entity.text);
           }
         }
         if(location_entites.length > 0) {
-          console.log("CREATEING OBJECT");
+          console.log("CREATING OBJECT");
           var breakingNews = new BreakingNews({text: text, locations: location_entites});
           breakingNews.save();
           console.log(breakingNews);
@@ -132,7 +125,7 @@ Onsite = function(index, twitter_connection_obj, alchemy_api_key, io) {
           current_breaking_news = breakingNews;
           callback(location_entites);
         } else {
-          if(!current_breaking_news) {              
+          if(!current_breaking_news) {
             BreakingNews.findOne({}, {}, { sort: { 'created' : -1 } }, function(err, news) {
               current_breaking_news = news;
               callback(current_breaking_news.locations);
@@ -140,7 +133,7 @@ Onsite = function(index, twitter_connection_obj, alchemy_api_key, io) {
           } else {
             callback(current_breaking_news.locations);
           }
-          
+
         }
       } else {
         console.log(response.statusCode);
@@ -150,17 +143,14 @@ Onsite = function(index, twitter_connection_obj, alchemy_api_key, io) {
   };
 
   var watch_locations = function(array_of_locations) {
-    console.log("WATCHING THESE LOCATIONS")
-    console.log(array_of_locations);
-    if(array_of_locations.length == 0) {
-      return;
-    }
+    console.log("Watch Locations: ", array_of_locations);
+    if(array_of_locations.length == 0) { return; }
+
     async.map(array_of_locations, location_iterator, function(err, results){
-      if(currentStream) {
-        currentStream.destroy();
-      }
+      if(currentStream) { currentStream.destroy(); }
       twit.stream('statuses/filter', {'locations':results}, function(stream) {
         currentStream = stream;
+
         stream.on('data', function (data) {
           if(tweet_filter(data)) {
             var validatedTweet = new ValidatedTweet({text: data.text, user: data.user, reason: reason, data: data, news: current_breaking_news});
@@ -169,14 +159,21 @@ Onsite = function(index, twitter_connection_obj, alchemy_api_key, io) {
             console.log(data.text + "\t" + data.user.followers_count);
           }
         });
+
         stream.on('end', function (response) {
-        // Handle a disconnection
+          // Handle a disconnection
           console.log('stream ended');
         });
+
         stream.on('destroy', function (response) {
           // Handle a 'silent' disconnection from Twitter, no end/error event fired
           console.log('stream destroyed');
         });
+
+        stream.on('error', function (err, code) {
+          console.log('stream error :: ', err, code);
+        });
+
       });
     });
   }
