@@ -23,7 +23,8 @@
     "twitter-text": "latest",
     "socket.io": "latest",
     "mongoose": "latest",
-    "mongoose-troop": "latest"
+    "mongoose-troop": "latest",
+    "twitter-text": "latest"
   },
   "devDependencies": {
     "nodemon": "latest"

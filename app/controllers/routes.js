@@ -24,6 +24,9 @@ exports.home = function(req, res) {
             if(err) {
                 res.send(500);
             }
+
+            console.log('news.text')
+            console.log(news.text.linked);
             var coords = null;
             for (var i in tweets) {
               if(tweets[i].data.coordinates) {
@@ -41,6 +44,10 @@ exports.home = function(req, res) {
               coordinates: coords
             });
         })
+      } else {
+        console.log('no news detected');
+        res.send(500);
+        res.end();
       }
     });
 };

@@ -37,7 +37,7 @@ var encodeGoogleViewport = function(viewport) {
   return southwest.lng + "," + southwest.lat + "," + northeast.lng + "," + northeast.lat;
 }
 
-var entity_types = ["StateOrCounty", "City", "State", "County", "Facility"];
+var entity_types = ["StateOrCounty", "City", "State", "County", "Facility", "Organization"];
 entity_types.sort();
 
 var reputable_set = require('./sources').organizations;
@@ -112,8 +112,12 @@ Onsite = function(index, twitter_connection_obj, alchemy_api_key, io) {
           console.log("Entity: ", entity.type, entity.text, entity.relevance);
 
           if(intersect_safe(entity_types, [entity.type]).length > 0 && entity.relevance > 0.1) {
-            // console.log(entity);
+            console.log('intersects');
             location_entites.push(entity.text);
+
+            console.log('here')
+          } else {
+            console.log('no intersect')
           }
         }
         if(location_entites.length > 0) {
@@ -126,9 +130,11 @@ Onsite = function(index, twitter_connection_obj, alchemy_api_key, io) {
           callback(location_entites);
         } else {
           if(!current_breaking_news) {
+            console.log('here')
             BreakingNews.findOne({}, {}, { sort: { 'created' : -1 } }, function(err, news) {
               current_breaking_news = news;
-              callback(current_breaking_news.locations);
+              if(current_breaking_news)
+                callback(current_breaking_news.locations);
             });
           } else {
             callback(current_breaking_news.locations);

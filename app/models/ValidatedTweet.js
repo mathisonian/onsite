@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var troop = require("mongoose-troop");
+var twitter = require('twitter-text')
+
 
 
 var ValidatedTweetSchema = new Schema({
@@ -15,3 +17,8 @@ var ValidatedTweetSchema = new Schema({
 ValidatedTweetSchema.plugin(troop.timestamp, {useVirtual: false});
 
 mongoose.model('ValidatedTweet', ValidatedTweetSchema);
+
+
+ValidatedTweetSchema.virtual('text.linked').get(function () {
+  return twitter.autoLink(this.text);
+});
