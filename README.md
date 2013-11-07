@@ -1,8 +1,13 @@
 # Onsite
 
 ## Motivation
-
 The goal of this project is to programatically surface reliable, first-hand accounts of news events as they are happening.
+
+
+![example from site](http://i.imgur.com/9oueRBW.png)
+> mockup of new design (using actual data collected)
+
+
 
 ## Technique
 
@@ -12,6 +17,9 @@ Onsite takes the stream and determines which tweets are the most trustworthy by 
 
 ## Demo
 
-Rough Demo http://onsite.mathisonian.com
+Rough Demo http://onsite.mathisonian.com [CURRENTLY OFFLINE]
 
 (disclaimer: only expect this to be interesting if a big news story is breaking, stream updates in realtime via websockets)
+
+![live example](http://i.imgur.com/fSNUnZM.png)
+> live screenshot
