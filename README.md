@@ -1,33 +1,25 @@
-node-foundation-boilerplate
-========
+# Onsite
 
-An opinionated, yet bare-bones starting point for creating an app using node.js/express/mongoose on the backend, and zurb foundation on the frontend
+## Motivation
+The goal of this project is to programatically surface reliable, first-hand accounts of news events as they are happening.
+
+
+![example from site](http://i.imgur.com/9oueRBW.png)
+> mockup of new design (using actual data collected)
 
 
 
-## Components
+## Technique
 
-### Frontend
+By applying entity extraction to breaking news headlines one can reliably determine named locations where the most important news events are happening right now. From there latlon bounding coordinates are determined and passed to twitter as a filter for the live firehose stream. 
 
-* Jade Templating Engine
-* Zurb Foundation CSS Framework
-* JQuery
+Onsite takes the stream and determines which tweets are the most trustworthy by applying a variety of filters and associations against known news organizations and media outlets, also taking into account follower count and user description keywords.
 
-### Backend
+## Demo
 
-* Node.js
-* Express.js
-* Mongoose.js
+Rough Demo http://onsite.mathisonian.com [CURRENTLY OFFLINE]
 
-### Database
+(disclaimer: only expect this to be interesting if a big news story is breaking, stream updates in realtime via websockets)
 
-* Mongo
-
-## Authors
-
-* Matthew Conlen <mc@mathisonian.com>
-* Andrew Sass <andrewpsass@gmail.com>
-
-## License
-
-This program is free software. It comes without any warranty, to the extent permitted by applicable law. You can redistribute it and/or modify it under the terms of the WTFPL, Version 2, as published by Sam Hocevar. See http://sam.zoy.org/wtfpl/ for more details.
+![live example](http://i.imgur.com/fSNUnZM.png)
+> live screenshot

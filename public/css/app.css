@@ -1,0 +1,44 @@
+html { height: 100% }
+body { height: 100%; margin: 0; padding: 0 }
+
+#map-canvas { 
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+}
+
+.white {
+    background: #fff;
+}
+
+.full-height {
+    height: 100%;
+}
+
+.side-container {
+    padding-left: 40px;
+    padding-right: 30px;
+    padding-top: 15px;
+}
+
+.cramped-left {
+    padding-left: 0;
+}
+
+.cramped-right {
+    padding-right: 0;
+}
+
+.cramped {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.rounded {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
