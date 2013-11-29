@@ -7,6 +7,7 @@ lib-cov
 *.pid
 *.gz
 *.tmp
+init.sh
 bower_components
 pids
 logs
