@@ -16,9 +16,8 @@ var ValidatedTweetSchema = new Schema({
 
 ValidatedTweetSchema.plugin(troop.timestamp, {useVirtual: false});
 
-mongoose.model('ValidatedTweet', ValidatedTweetSchema);
-
-
 ValidatedTweetSchema.virtual('text.linked').get(function () {
   return twitter.autoLink(this.text);
 });
+
+mongoose.model('ValidatedTweet', ValidatedTweetSchema);

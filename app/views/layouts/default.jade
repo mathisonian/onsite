@@ -21,15 +21,16 @@ html.no-js(lang='en')
         block extras-head          
 
     body
-        
+        block map
         .content.full-height
           block content
-        block map
+        
         block pre-footer
         block footer
             script(src="http://code.jquery.com/jquery-1.10.1.min.js")
             script(src="/js/underscore.js")
             script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBEL70kiUTu8ZBDOw9LU1fw0MMysZChos&sensor=false")
+            script(src="/js/gmaps.js")
             script(src="/socket.io/socket.io.js")
             script(src="/js/app.js")
         block extras-footer

@@ -53,6 +53,8 @@ var currentStream = false;
 
 Onsite = function(index, twitter_connection_obj, alchemy_api_key, io) {
 
+  console.log(twitter_connection_obj);
+
   var twit = new twitter(twitter_connection_obj);
 
   var tweet_filter = function(tweet_data) {
@@ -158,7 +160,10 @@ Onsite = function(index, twitter_connection_obj, alchemy_api_key, io) {
         currentStream = stream;
 
         stream.on('data', function (data) {
+          console.log('data');
+          // console.log(data);
           if(tweet_filter(data)) {
+            console.log('yoyoyo');
             var validatedTweet = new ValidatedTweet({text: data.text, user: data.user, reason: reason, data: data, news: current_breaking_news});
             validatedTweet.save();
             io.sockets.emit('tweet', { tweet: validatedTweet });

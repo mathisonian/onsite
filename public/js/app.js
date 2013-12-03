@@ -10,6 +10,24 @@ $(function() {
         $('.location-content').text(news.locations);
     });
 
+
+
+    var map = new GMaps({
+      div: '#map-canvas',
+      lat: map_location[1],
+      lng: map_location[0],
+      zoom: 14
+    });
+    var marker = map.addMarker({
+      lat: map_location[1],
+      lng: map_location[0],
+      title: 'tweet',
+      infoWindow: {
+          content: $('.tweet').first().html()
+        }
+    });
+    marker.infoWindow.open(map, marker);
+
     socket.on('tweet', function (data) {
         var validatedTweet = data.tweet;
         document.title = "@"+ validatedTweet.user.screen_name + " :: "+ validatedTweet.text;
@@ -20,29 +38,27 @@ $(function() {
         }
 
         var template = _.template($("#tweet-template").html());
-        $(".tweet-container").fadeOut(function() {
-            $(this).html(template({img: validatedTweet.user.profile_image_url,
+        var html = template({img: validatedTweet.user.profile_image_url,
                                    text: validatedTweet.text,
                                    screen_name: validatedTweet.user.screen_name,
-                                   reason: validatedTweet.reason}))
-                    .fadeIn();
+                                   name: validatedTweet.user.name,
+                                   reason: validatedTweet.reason});
+
+
+        $('.tweets').prepend(html);
+
+        map.removeMarkers();
+        var marker = map.addMarker({
+          lat: map_location[1],
+          lng: map_location[0],
+          title: 'tweet',
+          infoWindow: {
+              content: html
+            }
         });
+        marker.infoWindow.open(map, marker);
+
     });
-
-    var center;
-    if(map_location.length == 2) {
-        center = new google.maps.LatLng(map_location[1], map_location[0]);
-    } else {
-        codeAddress();
-    }
-
-    var mapOptions = {
-      center: center,
-      zoom: 14,
-      disableDefaultUI: true,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
     function codeAddress() {
         var geocoder = new google.maps.Geocoder(),

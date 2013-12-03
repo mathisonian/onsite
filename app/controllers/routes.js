@@ -15,25 +15,27 @@ exports.home = function(req, res) {
         res.send(500);
       }
       if (news.length > 0) {
-        news = news[0]
+        news = news[0];
       } else {
         news = null;
       }
       if(news) {
-        ValidatedTweet.find({news: news._id}).sort('-created').limit(1).exec(function(err, tweets) {
+        ValidatedTweet.find({news: news._id}).sort('-created').limit(10).exec(function(err, tweets) {
             if(err) {
                 res.send(500);
             }
 
-            console.log('news.text')
-            console.log(news.text.linked);
+            // console.log('news.text')
+            // console.log(news.get('text.linked'));
             var coords = null;
             for (var i in tweets) {
               if(tweets[i].data.coordinates) {
                 coords = tweets[i].data.coordinates.coordinates;
                 break;
               }
-            };
+            }
+
+            console.log('tweets length: ' + tweets.length);
 
             res.render('index', {
               title: 'Onsite',

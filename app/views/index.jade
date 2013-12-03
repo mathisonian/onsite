@@ -11,50 +11,66 @@ block content
             .row
                 .col-md-12.breaking-news
                     p.lead.news-content
-                        | #{news.text}         
+                        != news.get('text.linked')
                     .location
                         | Streaming Tweets From 
                         span.location-content
                             | #{news.locations}
             hr
-            for tweet in tweets
-                .row
-                    .col-md-12
-                        .row
-                            .col-md-3.cramped-right
-                                img(src="#{tweet.user.profile_image_url}").rounded
-                            .col-md-9.cramped
-                                .row
-                                    .col-md-12
-                                        span
-                                            b #{tweet.user.name} 
-                                .row
-                                    .col-md-12
-                                        span.small.text-muted
-                                            | @#{tweet.user.screen_name}
-                                .row
-                                    .col-md-12
-                                        p.lead.small
-                                            | #{tweet.text}
-                            //- .tweet-content
-                            //-     | #{tweet.text}
-                            //- br
-                            //- .tweet-user
-                            //-     |  - by @#{tweet.user.screen_name}
+            .tweets
+                for tweet in tweets
+                    .row.tweet
+                        .col-md-12
+                            .row
+                                .col-md-3.cramped-right
+                                    a(href="http://twitter.com/#{tweet.user.screen_name}", target="_blank")
+                                        img(src="#{tweet.user.profile_image_url}").rounded
+                                .col-md-9.cramped
+                                    .row
+                                        .col-md-12
+                                            span
+                                                b #{tweet.user.name} 
+                                    .row
+                                        .col-md-12
+                                            span.small.text-muted
+                                                | @#{tweet.user.screen_name}
+                                    .row
+                                        .col-md-12
+                                            p
+                                                != tweet.get('text.linked')
+                                //- .tweet-content
+                                //-     | #{tweet.text}
+                                //- br
+                                //- .tweet-user
+                                //-     |  - by @#{tweet.user.screen_name}
 
-                            //- br
-                            //- br
-                            //- .tweet-reason
-                            //-     | #{tweet.reason}
+                                //- br
+                                //- br
+                                //- .tweet-reason
+                                //-     | #{tweet.reason}
 
 
 block pre-footer
-    script#tweet-template(style='display: none', type="text/html").
-        <div class='tweet-pic'><img src='<%= img %>'></div>
-        <div class='tweet-content'><%= text %></div><br/>
-        <div class='tweet-content'> - by @<%= screen_name %></div>
-        <br/><br/>
-        <div class='tweet-reason'><%= reason %></div>
+    script#tweet-template(style='display: none', type="text/html")
+        .row
+            .col-md-12
+                .row
+                    .col-md-3.cramped-right
+                        a(href!="http://twitter.com/<%= screen_name %>", target="_blank")
+                            img(src!='<%= img %>').rounded
+                    .col-md-9.cramped
+                        .row
+                            .col-md-12
+                                span
+                                    b <%= name %>
+                        .row
+                            .col-md-12
+                                span.small.text-muted
+                                    | @<%= screen_name %>
+                        .row
+                            .col-md-12
+                                p
+                                    <%= text %>
 
     script.
         map_location = [#{coordinates}];
