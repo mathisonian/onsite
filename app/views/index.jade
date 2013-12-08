@@ -38,10 +38,9 @@ block content
                                         .col-md-12
                                             p
                                                 != tweet.get('text.linked')
-                                    .row
-                                        .col-md-12
-                                            span.small.text-muted
-                                                | @#{tweet.reason}
+                                                br
+                                                span.small.text-muted
+                                                    | #{tweet.reason}
                                 //- .tweet-content
                                 //-     | #{tweet.text}
                                 //- br
@@ -56,7 +55,7 @@ block content
 
 block pre-footer
     script#tweet-template(style='display: none', type="text/html")
-        .row
+        .row.tweet
             .col-md-12
                 .row
                     .col-md-3.cramped-right
@@ -75,10 +74,9 @@ block pre-footer
                             .col-md-12
                                 p
                                     <%= text %>
-                        .row
-                            .col-md-12
-                                span.small.text-muted
-                                    | <%= reason %>
+                                    br
+                                    span.small.text-muted
+                                        | <%= reason %>
 
     script.
         map_location = [#{coordinates}];

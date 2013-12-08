@@ -43,3 +43,7 @@ body { height: 100%; margin: 0; padding: 0 }
     -moz-border-radius: 5px;
     border-radius: 5px;
 }
+
+.tweet {
+    padding-bottom: 25px;
+}
