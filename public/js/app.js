@@ -8,6 +8,7 @@ $(function() {
 
         $('.news-content').text(news.text);
         $('.location-content').text(news.locations);
+        $('.tweets').html('');
     });
 
 
