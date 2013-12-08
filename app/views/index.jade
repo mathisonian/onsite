@@ -38,6 +38,10 @@ block content
                                         .col-md-12
                                             p
                                                 != tweet.get('text.linked')
+                                    .row
+                                        .col-md-12
+                                            span.small.text-muted
+                                                | @#{tweet.reason}
                                 //- .tweet-content
                                 //-     | #{tweet.text}
                                 //- br
@@ -71,6 +75,10 @@ block pre-footer
                             .col-md-12
                                 p
                                     <%= text %>
+                        .row
+                            .col-md-12
+                                span.small.text-muted
+                                    | <%= reason %>
 
     script.
         map_location = [#{coordinates}];

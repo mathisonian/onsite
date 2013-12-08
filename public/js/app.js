@@ -23,7 +23,7 @@ $(function() {
       lng: map_location[0],
       title: 'tweet',
       infoWindow: {
-          content: $('.tweet').first().html()
+          content: '<div class="content">' + $('.tweet').first().html() + '</div>'
         }
     });
     marker.infoWindow.open(map, marker);
@@ -53,7 +53,7 @@ $(function() {
           lng: map_location[0],
           title: 'tweet',
           infoWindow: {
-              content: html
+              content: '<div class="content">' + html + '</div>'
             }
         });
         marker.infoWindow.open(map, marker);
